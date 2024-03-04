@@ -1,27 +1,32 @@
 "use client"
 
-import * as React from "react"
-import * as DialogPrimitive from "@radix-ui/react-dialog"
-import { X } from "lucide-react"
+import * as React from "react";
+import * as DialogPrimitive from "@radix-ui/react-dialog";
+import { X } from "lucide-react";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
-const Dialog = DialogPrimitive.Root
+const Dialog = DialogPrimitive.Root;
 
-const DialogTrigger = DialogPrimitive.Trigger
+const DialogTrigger = DialogPrimitive.Trigger;
 
-const DialogPortal = ({
+// Define the props interface extending DialogPortalProps
+interface CustomDialogPortalProps extends DialogPrimitive.DialogPortalProps {
+  className?: string;
+}
+
+const DialogPortal: React.FC<CustomDialogPortalProps> = ({
   className,
   children,
   ...props
-}: DialogPrimitive.DialogPortalProps) => (
-  <DialogPrimitive.Portal className={cn(className)} {...props}>
-    <div className="fixed inset-0 z-50 flex items-start justify-center sm:items-center">
+}) => (
+  <DialogPrimitive.Portal {...props}>
+    <div className={`fixed inset-0 z-50 flex items-start justify-center sm:items-center ${className}`}>
       {children}
     </div>
   </DialogPrimitive.Portal>
-)
-DialogPortal.displayName = DialogPrimitive.Portal.displayName
+);
+DialogPortal.displayName = DialogPrimitive.Portal.displayName;
 
 const DialogOverlay = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Overlay>,
@@ -120,6 +125,7 @@ DialogDescription.displayName = DialogPrimitive.Description.displayName
 export {
   Dialog,
   DialogTrigger,
+  DialogPortal,
   DialogContent,
   DialogHeader,
   DialogFooter,
